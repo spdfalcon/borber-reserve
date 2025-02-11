@@ -22,6 +22,7 @@ export default function Header() {
     { name: 'آرایشگاه‌ها', href: '/barbershops', icon: PiCalendarCheck },
     { name: 'درباره ما', href: '/about', icon: PiUserCircle },
     { name: 'تماس با ما', href: '/contact', icon: PiPhone },
+    { name: 'وبلاگ', href: '/blog', icon: PiCalendarCheck },
   ];
 
   return (
