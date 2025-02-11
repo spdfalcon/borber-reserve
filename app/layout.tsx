@@ -3,6 +3,8 @@ import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
+import { Suspense } from 'react';
+import RootLoading from './loading';
 
 const vazir = Vazirmatn({
   variable: "--font-vazir",
@@ -84,9 +86,11 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">
       <body className={`${vazir.variable} antialiased min-h-screen flex flex-col`}>
         <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
+        <Suspense fallback={<RootLoading />}>
+          <main className="flex-grow">
+            {children}
+          </main>
+        </Suspense>
         <Footer />
       </body>
     </html>
