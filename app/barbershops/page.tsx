@@ -1,122 +1,208 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { FiMapPin, FiStar, FiSearch, FiSliders, FiClock, FiDollarSign } from 'react-icons/fi';
+
 export const metadata = {
   title: 'لیست آرایشگاه‌ها | سامانه نوبت‌دهی آرایشگاه',
   description: 'جستجو و مشاهده لیست آرایشگاه‌های تهران',
 };
 
 export default function BarbershopsPage() {
+  const barbershops = [
+    {
+      id: 1,
+      name: "آرایشگاه مدرن",
+      image: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937",
+      rating: 4.9,
+      reviews: 128,
+      location: "سعادت آباد",
+      priceRange: "متوسط",
+      openingHours: "۹ صبح تا ۱۰ شب",
+      featured: true,
+      services: ["اصلاح مو", "اصلاح صورت", "رنگ مو"],
+    },
+    // ... more barbershops
+  ];
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-6">
-        {/* Filters Sidebar */}
-        <aside className="w-full md:w-1/4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg h-fit">
-          <h2 className="text-xl font-semibold mb-4">فیلترها</h2>
-          
-          {/* Location Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">منطقه</h3>
-            <select className="w-full p-2 border border-gray-300 rounded-md">
-              <option value="">همه مناطق</option>
-              {Array.from({length: 22}, (_, i) => (
-                <option key={i + 1} value={i + 1}>منطقه {i + 1}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Rating Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">امتیاز</h3>
-            <div className="space-y-2">
-              {[5, 4, 3, 2, 1].map((rating) => (
-                <label key={rating} className="flex items-center">
-                  <input type="checkbox" className="ml-2" />
-                  <span>{rating} ستاره و بالاتر</span>
-                </label>
-              ))}
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section with Search */}
+      <section className="relative h-[300px] overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70"
+          alt="آرایشگاه‌ها"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/90 to-primary-800/90" />
+        <div className="absolute inset-0 flex items-center">
+          <div className="container mx-auto px-4">
+            <div className="max-w-3xl mx-auto text-center text-white mb-8">
+              <h1 className="text-4xl font-bold mb-4">بهترین آرایشگاه‌های تهران</h1>
+              <p className="text-xl text-gray-200">از بین صدها آرایشگاه، بهترین را انتخاب کنید</p>
             </div>
-          </div>
-
-          {/* Price Range Filter */}
-          <div className="mb-6">
-            <h3 className="font-medium mb-2">محدوده قیمت</h3>
-            <div className="space-y-2">
-              <label className="flex items-center">
-                <input type="checkbox" className="ml-2" />
-                <span>اقتصادی</span>
-              </label>
-              <label className="flex items-center">
-                <input type="checkbox" className="ml-2" />
-                <span>متوسط</span>
-              </label>
-              <label className="flex items-center">
-                <input type="checkbox" className="ml-2" />
-                <span>لوکس</span>
-              </label>
-            </div>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <main className="w-full md:w-3/4">
-          {/* Search and Sort */}
-          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg mb-6">
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-              <input
-                type="search"
-                placeholder="جستجوی آرایشگاه..."
-                className="w-full md:w-96 p-2 border border-gray-300 rounded-md"
-              />
-              <select className="p-2 border border-gray-300 rounded-md">
-                <option value="rating">بر اساس امتیاز</option>
-                <option value="reviews">بر اساس تعداد نظرات</option>
-                <option value="price-low">ارزان‌ترین</option>
-                <option value="price-high">گران‌ترین</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Barbershops Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Sample Barbershop Card - This will be mapped over real data */}
-            {Array.from({length: 9}, (_, i) => (
-              <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-                <div className="aspect-video relative">
-                  <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-white p-2 rounded-2xl shadow-2xl flex items-center gap-4">
+                <div className="flex-1 flex items-center gap-2 px-4">
+                  <FiSearch className="w-5 h-5 text-gray-400" />
+                  <input
+                    type="search"
+                    placeholder="جستجوی آرایشگاه..."
+                    className="w-full p-2 focus:outline-none text-gray-700"
+                  />
                 </div>
-                <div className="p-4">
-                  <h3 className="font-semibold text-lg mb-2">آرایشگاه نمونه {i + 1}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">منطقه {Math.floor(Math.random() * 22) + 1} تهران</p>
-                  <div className="flex items-center mb-2">
-                    {Array.from({length: 5}, (_, j) => (
-                      <span key={j} className="text-yellow-400">★</span>
+                <div className="flex-1 flex items-center gap-2 px-4 border-r">
+                  <FiMapPin className="w-5 h-5 text-gray-400" />
+                  <select className="w-full p-2 focus:outline-none text-gray-700 bg-transparent">
+                    <option value="">انتخاب منطقه</option>
+                    {Array.from({length: 22}, (_, i) => (
+                      <option key={i + 1} value={i + 1}>منطقه {i + 1}</option>
                     ))}
-                    <span className="mr-1 text-sm">({Math.floor(Math.random() * 100) + 1} نظر)</span>
-                  </div>
-                  <button className="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 transition-colors">
-                    رزرو نوبت
-                  </button>
+                  </select>
+                </div>
+                <button className="bg-primary-600 text-white px-6 py-3 rounded-xl hover:bg-primary-700 transition-colors">
+                  جستجو
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="container mx-auto px-4 py-12">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Filters Sidebar */}
+          <aside className="lg:w-1/4">
+            <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold">فیلترها</h2>
+                <FiSliders className="w-5 h-5 text-gray-500" />
+              </div>
+
+              {/* Price Range */}
+              <div className="mb-8">
+                <h3 className="font-medium mb-4 flex items-center gap-2">
+                  <FiDollarSign className="w-5 h-5 text-primary-600" />
+                  محدوده قیمت
+                </h3>
+                <div className="space-y-3">
+                  {['اقتصادی', 'متوسط', 'لوکس'].map((price) => (
+                    <label key={price} className="flex items-center gap-2 cursor-pointer group">
+                      <input type="checkbox" className="form-checkbox text-primary-600 rounded border-gray-300 focus:ring-primary-500" />
+                      <span className="group-hover:text-primary-600 transition-colors">{price}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Pagination */}
-          <div className="mt-8 flex justify-center">
-            <nav className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((page) => (
-                <button
-                  key={page}
-                  className={`px-4 py-2 rounded-md ${
-                    page === 1
-                      ? 'bg-primary-600 text-white'
-                      : 'bg-white dark:bg-gray-800'
-                  }`}
-                >
-                  {page}
-                </button>
+              {/* Services */}
+              <div className="mb-8">
+                <h3 className="font-medium mb-4 flex items-center gap-2">
+                  <FiClock className="w-5 h-5 text-primary-600" />
+                  خدمات
+                </h3>
+                <div className="space-y-3">
+                  {['اصلاح مو', 'اصلاح صورت', 'رنگ مو', 'کوتاهی', 'شینیون'].map((service) => (
+                    <label key={service} className="flex items-center gap-2 cursor-pointer group">
+                      <input type="checkbox" className="form-checkbox text-primary-600 rounded border-gray-300 focus:ring-primary-500" />
+                      <span className="group-hover:text-primary-600 transition-colors">{service}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Rating Filter */}
+              <div>
+                <h3 className="font-medium mb-4 flex items-center gap-2">
+                  <FiStar className="w-5 h-5 text-primary-600" />
+                  حداقل امتیاز
+                </h3>
+                <div className="space-y-3">
+                  {[4, 3, 2].map((rating) => (
+                    <label key={rating} className="flex items-center gap-2 cursor-pointer group">
+                      <input type="radio" name="rating" className="form-radio text-primary-600 focus:ring-primary-500" />
+                      <div className="flex items-center gap-1">
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <FiStar
+                            key={index}
+                            className={`w-4 h-4 ${index < rating ? 'text-yellow-400' : 'text-gray-300'}`}
+                          />
+                        ))}
+                        <span className="text-sm text-gray-600">و بالاتر</span>
+                      </div>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* Main Content */}
+          <main className="lg:w-3/4">
+            <div className="grid md:grid-cols-2 gap-6">
+              {barbershops.map((shop) => (
+                <Link key={shop.id} href={`/barbershops/${shop.id}`}>
+                  <article className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group">
+                    <div className="relative h-48">
+                      <Image
+                        src={shop.image}
+                        alt={shop.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      {shop.featured && (
+                        <span className="absolute top-4 right-4 bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                          ویژه
+                        </span>
+                      )}
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary-600 transition-colors">
+                        {shop.name}
+                      </h3>
+                      <div className="flex items-center gap-1 mb-2">
+                        {Array.from({ length: 5 }).map((_, index) => (
+                          <FiStar
+                            key={index}
+                            className={`w-4 h-4 ${
+                              index < Math.floor(shop.rating)
+                                ? 'text-yellow-400'
+                                : 'text-gray-300'
+                            }`}
+                          />
+                        ))}
+                        <span className="text-sm text-gray-600">
+                          ({shop.reviews} نظر)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+                        <span className="flex items-center gap-1">
+                          <FiMapPin className="w-4 h-4" />
+                          {shop.location}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <FiClock className="w-4 h-4" />
+                          {shop.openingHours}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {shop.services.map((service) => (
+                          <span
+                            key={service}
+                            className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm"
+                          >
+                            {service}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </article>
+                </Link>
               ))}
-            </nav>
-          </div>
-        </main>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
   );

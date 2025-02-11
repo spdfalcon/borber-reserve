@@ -1,116 +1,145 @@
-export const metadata = {
-  title: 'جزئیات آرایشگاه | سامانه نوبت‌دهی آرایشگاه',
-  description: 'مشاهده جزئیات و رزرو نوبت آرایشگاه',
-};
+'use client'
+import { useState } from 'react';
+import Image from 'next/image';
+import { 
+  FiMapPin, FiStar, FiPhone, 
+  FiInstagram 
+} from 'react-icons/fi';
+import CalendarReserve from '@/app/components/booking/CalendarReserve';
 
 export default function BarbershopDetailPage() {
+  const [activeTab, setActiveTab] = useState('about');
+
+  const barbershop = {
+    name: "آرایشگاه VIP رویال",
+    rating: 4.8,
+    reviews: 156,
+    location: "سعادت‌آباد، خیابان علامه شمالی",
+    about: `آرایشگاه VIP رویال با بیش از ۱۰ سال سابقه درخشان در ارائه خدمات آرایشی و پیرایشی مردانه...`,
+    images: [
+      'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937',
+      'https://images.unsplash.com/photo-1503951914875-452162b0f3f1',
+      'https://images.unsplash.com/photo-1622286350715-39e0a56023a2',
+    ],
+    team: [
+      {
+        name: "استاد محمدی",
+        role: "متخصص اصلاح مو",
+        image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e",
+        experience: "۱۵ سال",
+      },
+      // ... more team members
+    ],
+    workingHours: {
+      شنبه_تا_چهارشنبه: "۹ صبح تا ۹ شب",
+      پنجشنبه: "۹ صبح تا ۸ شب",
+      جمعه: "تعطیل"
+    },
+    contact: {
+      phone: "۰۲۱-۱۲۳۴۵۶۷۸",
+      instagram: "@royal_barbershop",
+      address: "تهران، سعادت‌آباد، خیابان علامه شمالی، پلاک ۱۲۳"
+    }
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Hero Section with Video/Image */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8">
-        <div className="aspect-video relative">
-          <div className="absolute inset-0 bg-gray-200 animate-pulse"></div>
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <div className="relative h-[500px]">
+        <div className="relative h-full">
+          <Image
+            src={barbershop.images[0]}
+            alt={barbershop.name}
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent" />
+        </div>
+        
+        <div className="absolute bottom-0 left-0 w-full p-8 text-white">
+          <div className="container mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{barbershop.name}</h1>
+            <div className="flex flex-wrap items-center gap-6">
+              <div className="flex items-center">
+                <FiMapPin className="mr-2" />
+                {barbershop.location}
+              </div>
+              <div className="flex items-center">
+                <FiStar className="mr-2 text-yellow-400" />
+                {barbershop.rating} ({barbershop.reviews} نظر)
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Barbershop Info */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content */}
-        <div className="lg:col-span-2 space-y-8">
-          {/* Basic Info */}
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h1 className="text-3xl font-bold mb-4">آرایشگاه نمونه</h1>
-            <div className="flex items-center mb-4">
-              {Array.from({ length: 5 }, (_, i) => (
-                <span key={i} className="text-yellow-400 text-xl">★</span>
-              ))}
-              <span className="mr-2">(۴.۸ از ۱۲۳ نظر)</span>
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Navigation Tabs */}
+            <div className="bg-white rounded-2xl shadow-lg p-4">
+              <div className="flex space-x-4 space-x-reverse border-b">
+                {['about', 'services', 'team', 'reviews'].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab)}
+                    className={`px-4 py-3 font-medium transition-colors ${
+                      activeTab === tab
+                        ? 'text-primary-600 border-b-2 border-primary-600'
+                        : 'text-gray-600 hover:text-primary-600'
+                    }`}
+                  >
+                    {tab === 'about' && 'درباره ما'}
+                    {tab === 'services' && 'خدمات'}
+                    {tab === 'team' && 'تیم ما'}
+                    {tab === 'reviews' && 'نظرات'}
+                  </button>
+                ))}
+              </div>
             </div>
-            <p className="text-gray-600 dark:text-gray-400">
-              منطقه ۳ تهران، خیابان ولیعصر، کوچه مثال
-            </p>
-          </div>
 
-          {/* Services */}
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">خدمات و قیمت‌ها</h2>
-            <div className="space-y-4">
-              {['اصلاح مو', 'اصلاح صورت', 'رنگ مو', 'شینیون'].map((service, index) => (
-                <div key={index} className="flex justify-between items-center p-3 border-b last:border-0">
-                  <span>{service}</span>
-                  <span className="font-semibold">{(index + 1) * 50},000 تومان</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Team Members */}
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">تیم ما</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} className="text-center">
-                  <div className="w-32 h-32 mx-auto rounded-full bg-gray-200 mb-2"></div>
-                  <h3 className="font-semibold">آرایشگر {i + 1}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">متخصص اصلاح مو</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Reviews */}
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold mb-4">نظرات مشتریان</h2>
-            <div className="space-y-4">
-              {Array.from({ length: 3 }, (_, i) => (
-                <div key={i} className="border-b last:border-0 pb-4">
-                  <div className="flex items-center mb-2">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 ml-3"></div>
-                    <div>
-                      <h4 className="font-semibold">کاربر {i + 1}</h4>
-                      <div className="flex">
-                        {Array.from({ length: 5 }, (_, j) => (
-                          <span key={j} className="text-yellow-400">★</span>
-                        ))}
+            {/* Tab Content */}
+            <div className="bg-white rounded-2xl shadow-lg p-8">
+              {activeTab === 'about' && (
+                <div className="space-y-6">
+                  <p className="text-gray-700 leading-relaxed">
+                    {barbershop.about}
+                  </p>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-gray-50 p-4 rounded-xl">
+                      <h3 className="font-medium text-gray-900 mb-2">ساعات کاری</h3>
+                      {Object.entries(barbershop.workingHours).map(([day, hours]) => (
+                        <div key={day} className="flex justify-between text-sm text-gray-600">
+                          <span>{day}</span>
+                          <span>{hours}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="bg-gray-50 p-4 rounded-xl">
+                      <h3 className="font-medium text-gray-900 mb-2">اطلاعات تماس</h3>
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <div className="flex items-center">
+                          <FiPhone className="ml-2" />
+                          {barbershop.contact.phone}
+                        </div>
+                        <div className="flex items-center">
+                          <FiInstagram className="ml-2" />
+                          {barbershop.contact.instagram}
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <p>بسیار عالی و حرفه‌ای. من از نتیجه کار راضی بودم.</p>
                 </div>
-              ))}
+              )}
+              
+              {/* ... other tab contents ... */}
             </div>
           </div>
-        </div>
 
-        {/* Booking Sidebar */}
-        <div className="lg:col-span-1">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg sticky top-4">
-            <h2 className="text-2xl font-bold mb-4">رزرو نوبت</h2>
-            <div className="space-y-4">
-              {/* Calendar will be implemented here */}
-              <div className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg min-h-[300px] mb-4">
-                تقویم
-              </div>
-              
-              <select className="w-full p-2 border border-gray-300 rounded-md mb-4">
-                <option value="">انتخاب خدمت</option>
-                <option>اصلاح مو</option>
-                <option>اصلاح صورت</option>
-                <option>رنگ مو</option>
-                <option>شینیون</option>
-              </select>
-
-              <select className="w-full p-2 border border-gray-300 rounded-md mb-4">
-                <option value="">انتخاب آرایشگر</option>
-                <option>آرایشگر 1</option>
-                <option>آرایشگر 2</option>
-                <option>آرایشگر 3</option>
-              </select>
-
-              <button className="w-full bg-primary-600 text-white py-3 px-4 rounded-md hover:bg-primary-700 transition-colors">
-                رزرو نوبت
-              </button>
-            </div>
+          {/* Booking Sidebar */}
+          <div className="lg:col-span-1">
+            <CalendarReserve />
           </div>
         </div>
       </div>
