@@ -3,14 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiClock, FiCalendar, FiShare2, FiBookmark, FiArrowLeft } from 'react-icons/fi';
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata() {
   return {
     title: 'راهنمای انتخاب مدل مو | وبلاگ آرایشگاه',
     description: 'راهنمای کامل انتخاب مدل مو متناسب با فرم صورت - آموزش تخصصی آرایشگری',
   };
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
+export default function BlogPost() {
   const article = {
     title: 'راهنمای جامع انتخاب مدل مو متناسب با فرم صورت',
     excerpt: 'در این راهنما به بررسی اصول انتخاب مدل مو برای انواع فرم‌های صورت می‌پردازیم...',
