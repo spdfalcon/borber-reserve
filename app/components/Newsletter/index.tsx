@@ -16,6 +16,8 @@ export default function NewsletterForm() {
       setEmail('');
     } catch (error) {
       setStatus('error');
+      console.log(error);
+      
     }
   };
 

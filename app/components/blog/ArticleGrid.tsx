@@ -17,7 +17,7 @@ const item = {
   show: { y: 0, opacity: 1 }
 };
 
-export default function ArticleGrid({ articles }: any) {
+export default function ArticleGrid({ articles }) {
   return (
     <motion.div 
       variants={container}

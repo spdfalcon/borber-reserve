@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiClock } from 'react-icons/fi';
 
-export default function ArticleCard({ article }: any) {
+export default function ArticleCard({ article }) {
   return (
     <article className="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-shadow duration-300">
       <div className="relative h-56 overflow-hidden">

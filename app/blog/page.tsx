@@ -1,95 +1,71 @@
-import BlogHeader from '../components/blog/BlogHeader';
-import FeaturedArticle from '../components/blog/FeaturedArticle';
-import ArticleGrid from '../components/blog/ArticleGrid';
-import CategoryTabs from '../components/blog/CategoryTabs';
-import NewsletterSection from '../components/blog/NewsletterSection';
-
 export const metadata = {
   title: 'وبلاگ | سامانه نوبت‌دهی آرایشگاه',
   description: 'مقالات و نکات آموزشی در حوزه آرایشگری و زیبایی',
 };
 
-export default async function BlogPage() {
-  const featuredArticle = {
-    slug: 'hairstyle-guide',
-    title: 'راهنمای جامع انتخاب مدل مو متناسب با فرم صورت',
-    excerpt: 'در این راهنما به بررسی اصول انتخاب مدل مو برای انواع فرم‌های صورت می‌پردازیم و نکات کلیدی برای داشتن ظاهری متناسب را مرور می‌کنیم...',
-    image: 'https://images.unsplash.com/photo-1622286350715-39e0a56023a2',
-    category: 'راهنمای تخصصی',
-    readingTime: 10,
-    publishDate: '۲ اردیبهشت ۱۴۰۳',
-    author: {
-      name: 'علی محمدی',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e',
-    },
-  };
-
-  const articles = [
-    {
-      slug: 'beard-care',
-      title: 'اصول نگهداری از ریش',
-      excerpt: 'مراقبت صحیح از ریش برای داشتن ظاهری آراسته...',
-      image: 'https://images.unsplash.com/photo-1621605815971-fbc98d665033',
-      category: 'مراقبت',
-      readingTime: 6,
-      author: {
-        name: 'رضا کریمی',
-        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e',
-      },
-    },
-    // ... اضافه کردن مقالات بیشتر
-  ];
-
+export default function BlogPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-white">
-      <BlogHeader />
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">وبلاگ</h1>
       
-      <div className="container mx-auto px-4 mt-5 relative z-10">
-        {/* Categories */}
-        <CategoryTabs />
-
-        {/* Featured Article */}
-        <div className="my-16">
-          <FeaturedArticle article={featuredArticle} />
-        </div>
-
-        {/* Latest Articles */}
-        <div className="mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold flex items-center">
-              <span className="w-8 h-1 bg-primary-500 rounded-full ml-3"></span>
-              آخرین مقالات
-            </h2>
-            <a href="/blog/archive" className="text-primary-600 hover:text-primary-700 flex items-center gap-2">
-              مشاهده همه
-              <span className="text-lg">←</span>
+      {/* Featured Post */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-8">
+        <div className="aspect-video relative bg-gray-200"></div>
+        <div className="p-6">
+          <span className="text-primary-600 text-sm font-semibold">آموزشی</span>
+          <h2 className="text-2xl font-bold mt-2 mb-4">نکات مهم در انتخاب مدل مو</h2>
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
+            در این مقاله به بررسی مهم‌ترین نکات در انتخاب مدل مو متناسب با فرم صورت می‌پردازیم...
+          </p>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">۲ ساعت پیش</span>
+            <a href="/blog/1" className="text-primary-600 hover:text-primary-700">
+              ادامه مطلب →
             </a>
           </div>
-          <ArticleGrid articles={articles} />
         </div>
+      </div>
 
-        {/* Newsletter */}
-        <div className="mb-16">
-          <NewsletterSection />
-        </div>
+      {/* Blog Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {Array.from({ length: 6 }, (_, i) => (
+          <article key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div className="aspect-video relative bg-gray-200"></div>
+            <div className="p-6">
+              <span className="text-primary-600 text-sm font-semibold">
+                {['آموزشی', 'سبک زندگی', 'مراقبت مو'][i % 3]}
+              </span>
+              <h3 className="text-xl font-bold mt-2 mb-4">عنوان مقاله {i + 1}</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                خلاصه کوتاهی از محتوای مقاله که در این قسمت نمایش داده می‌شود...
+              </p>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-500">{i + 1} روز پیش</span>
+                <a href={`/blog/${i + 1}`} className="text-primary-600 hover:text-primary-700">
+                  ادامه مطلب →
+                </a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
 
-        {/* Pagination */}
-        <div className="flex justify-center pb-16">
-          <nav className="flex gap-2 p-1.5 bg-white rounded-2xl shadow-lg">
-            {[1, 2, 3, 4, 5].map((page) => (
-              <button
-                key={page}
-                className={`w-12 h-12 flex items-center justify-center rounded-xl transition-all ${
-                  page === 1
-                    ? 'bg-primary-500 text-white'
-                    : 'text-gray-600 hover:bg-primary-50 hover:text-primary-600'
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-          </nav>
-        </div>
+      {/* Pagination */}
+      <div className="mt-12 flex justify-center">
+        <nav className="flex gap-2">
+          {[1, 2, 3, 4, 5].map((page) => (
+            <button
+              key={page}
+              className={`px-4 py-2 rounded-md ${
+                page === 1
+                  ? 'bg-primary-600 text-white'
+                  : 'bg-white dark:bg-gray-800'
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+        </nav>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ export const metadata = {
   description: 'مشاهده جزئیات و رزرو نوبت آرایشگاه',
 };
 
-export default function BarbershopDetailPage({ params }: { params: { id: string } }) {
+export default function BarbershopDetailPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Hero Section with Video/Image */}
